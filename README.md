@@ -4,7 +4,10 @@
 ![IAM](https://img.shields.io/badge/IAM-Identity%20%26%20Access%20Management-blue?style=flat-square)
 ![Security](https://img.shields.io/badge/Security-Best%20Practices-green?style=flat-square)
 ![Status](https://img.shields.io/badge/status-educational-blue)
+![Docs](https://img.shields.io/badge/docs-markdown-blue)
+![Last Commit](https://img.shields.io/github/last-commit/Garcez7R/aws-cloud-security-iam-governance)
 
+---
 
 ## 📋 Sobre o Projeto
 
@@ -23,11 +26,11 @@ O repositório simula um cenário corporativo real, comum em times de segurança
 
 Este projeto demonstra competências em:
 
-- **Análise de Políticas IAM**: Identificação de permissões excessivas e vulnerabilidades de segurança
-- **Princípio do Menor Privilégio**: Implementação de controles de acesso baseados em necessidade real
-- **Governança em Cloud**: Aplicação de frameworks e boas práticas de segurança corporativa
-- **Documentação Técnica**: Comunicação clara de decisões de segurança e análise de riscos
-- **Pensamento Crítico**: Análise de incidentes e proposição de medidas corretivas
+- **Análise de Políticas IAM**: identificação de permissões excessivas e vulnerabilidades  
+- **Princípio do Menor Privilégio**: implementação de controles de acesso baseados em necessidade real  
+- **Governança em Cloud**: aplicação de frameworks e boas práticas corporativas  
+- **Documentação Técnica**: comunicação clara de decisões de segurança e análise de riscos  
+- **Pensamento Crítico**: análise de incidentes e proposição de medidas corretivas  
 
 ---
 
@@ -42,136 +45,162 @@ A TechNova Solutions identificou vulnerabilidades em suas políticas de acesso a
 
 ---
 
+## 📊 Diagrama de Arquitetura IAM
+
+Para facilitar a visualização das relações entre usuários, grupos, roles e permissões:
+
+![Arquitetura IAM](diagrams/iam-architecture.png)
+
+---
+
 ## 📁 Estrutura do Repositório
 
-```
 aws-cloud-security-iam-governance/
-├── README.md                          # Documento principal do projeto
-├── PROJECT_GUIDE.md                   # Guia detalhado de implementação
-├── policies/                          # Políticas IAM em formato JSON
-│   ├── insecure-admin.json           # Exemplo de política insegura
-│   ├── developer-least-privilege.json # Política corrigida (least privilege)
-│   └── read-only.json                # Política de acesso somente leitura
-├── analysis/                          # Análises de segurança
-│   ├── risk-analysis.md              # Análise de riscos IAM
-│   ├── least-privilege.md            # Explicação do princípio
-│   ├── common-iam-mistakes.md        # Erros comuns em IAM
-│   └── security-checklist.md         # Checklist de boas práticas
-├── case/                              # Caso prático
-│   └── security-incident-case.md     # Estudo de caso de incidente
-└── diagrams/                          # Diagramas de arquitetura
-    └── iam-architecture.png          # Arquitetura IAM visual
-```
+├── README.md
+├── PROJECT_GUIDE.md
+├── policies/
+│ ├── insecure-admin.json
+│ ├── developer-least-privilege.json
+│ └── read-only.json
+├── analysis/
+│ ├── risk-analysis.md
+│ ├── least-privilege.md
+│ ├── common-iam-mistakes.md
+│ └── security-checklist.md
+├── case/
+│ └── security-incident-case.md
+└── diagrams/
+└── iam-architecture.png
+
+markdown
+Copiar código
+
+---
+
+## 🚀 Navegação do Repositório
+
+- **[README.md](README.md)**: visão geral do projeto  
+- **[case/security-incident-case.md](case/security-incident-case.md)**: estudo de caso completo  
+- **[policies/](policies/)**: exemplos práticos de políticas JSON  
+- **[analysis/](analysis/)**: análises de risco, checklists e boas práticas  
+- **[diagrams/](diagrams/)**: diagramas de arquitetura e fluxos  
+- **[PROJECT_GUIDE.md](PROJECT_GUIDE.md)**: guia detalhado de implementação  
+
+---
+
+## 📌 Estudo de Caso: Incidente de Segurança IAM
+
+Simulação de incidente real envolvendo falhas de IAM:
+
+- **Dados Expostos:** 200GB / 150.000 registros de clientes  
+- **Duração do Comprometimento:** 4 dias  
+- **Tempo de Detecção:** 76 horas  
+- **Tempo de Contenção:** 2 horas após detecção  
+- **Custo Direto Estimado:** R$ 173.500  
+- **Indisponibilidade de Sistemas:** 6 horas  
+- **Lições Aprendidas:** menor privilégio, MFA obrigatório, monitoramento contínuo, segregação de ambientes  
+
+[📄 Ler estudo completo →](case/security-incident-case.md)
 
 ---
 
 ## 🔐 Tecnologias e Conceitos
 
 ### Tecnologias AWS
-- **IAM (Identity and Access Management)**: Gerenciamento de identidades e acessos
-- **S3 (Simple Storage Service)**: Armazenamento de objetos
-- **EC2 (Elastic Compute Cloud)**: Servidores virtuais
-- **RDS (Relational Database Service)**: Banco de dados gerenciado
-- **CloudWatch**: Monitoramento e logs
+- **IAM**: Gerenciamento de identidades e acessos  
+- **S3**: Armazenamento de objetos  
+- **EC2**: Servidores virtuais  
+- **RDS**: Banco de dados gerenciado  
+- **CloudWatch**: Monitoramento e logs  
 
 ### Conceitos de Segurança
-- **Least Privilege**: Princípio do menor privilégio
-- **Zero Trust**: Modelo de segurança baseado em verificação contínua
-- **Defense in Depth**: Defesa em camadas
-- **Separation of Duties**: Segregação de funções
-- **IAM Policies**: Políticas baseadas em JSON
-- **Resource-Based Permissions**: Permissões baseadas em recursos
-
----
-
-## 🚀 Navegação do Repositório
-
-Este repositório está organizado para facilitar a compreensão progressiva do projeto, desde o contexto do problema até as decisões técnicas de segurança adotadas.
-
-- **README.md**: visão geral do projeto, objetivos e contexto
-- **case/security-incident-case.md**: estudo de caso que simula um incidente real envolvendo falhas de IAM
-- **policies/**: exemplos práticos de políticas IAM, incluindo cenários inseguros e versões corrigidas
-- **analysis/**: análises de risco, boas práticas e erros comuns relacionados a IAM
-- **diagrams/**: representação visual da arquitetura e dos controles de acesso
-- **PROJECT_GUIDE.md**: documentação detalhada do processo e da metodologia utilizada
+- **Least Privilege**  
+- **Zero Trust**  
+- **Defense in Depth**  
+- **Separation of Duties**  
+- **IAM Policies**  
+- **Resource-Based Permissions**  
 
 ---
 
 ## 📊 Principais Entregas
 
-### 1. Políticas IAM Documentadas
-Três exemplos práticos de políticas IAM:
-- Política insegura com permissões excessivas (anti-pattern)
-- Política corrigida seguindo least privilege
-- Política read-only para auditoria e monitoramento
+1. **Políticas IAM Documentadas**  
+   - Política insegura (permissões excessivas)  
+   - Política corrigida (least privilege)  
+   - Política read-only  
 
-### 2. Análise de Riscos
-Identificação e classificação de riscos associados a configurações inadequadas de IAM, incluindo:
-- Impacto potencial
-- Probabilidade de ocorrência
-- Medidas de mitigação
+2. **Análise de Riscos**  
+   - Impacto potencial  
+   - Probabilidade de ocorrência  
+   - Medidas de mitigação  
 
-### 3. Caso de Incidente Real
-Simulação de incidente de segurança causado por falhas de IAM, incluindo:
-- Contexto e cronologia
-- Análise de causa raiz
-- Medidas corretivas implementadas
-- Lições aprendidas
+3. **Caso de Incidente Real**  
+   - Contexto e cronologia  
+   - Análise de causa raiz  
+   - Medidas corretivas implementadas  
+   - Lições aprendidas  
 
-### 4. Documentação de Boas Práticas
-Compilação de erros comuns, recomendações e checklist de segurança para implementação em ambientes reais.
+4. **Documentação de Boas Práticas**  
+   - Checklist e recomendações para ambientes reais  
 
 ---
 
 ## 🎓 Aprendizados e Competências
 
-Este projeto reflete atividades comuns em funções de:
-- **Cloud Security Engineer**
-- **DevSecOps Engineer**
-- **Cloud Governance Analyst**
-- **Security Auditor**
-- **IAM Specialist**
+Funções relacionadas:
+
+- Cloud Security Engineer  
+- DevSecOps Engineer  
+- Cloud Governance Analyst  
+- Security Auditor  
+- IAM Specialist  
 
 Competências demonstradas:
-- ✅ Leitura e interpretação de políticas IAM em JSON
-- ✅ Identificação de vulnerabilidades de segurança
-- ✅ Aplicação de frameworks de segurança (AWS Well-Architected)
-- ✅ Documentação técnica clara e estruturada
-- ✅ Pensamento analítico e resolução de problemas
-- ✅ Comunicação de conceitos técnicos complexos
+
+- ✅ Leitura e interpretação de políticas IAM em JSON  
+- ✅ Identificação de vulnerabilidades de segurança  
+- ✅ Aplicação de frameworks de segurança (AWS Well-Architected)  
+- ✅ Documentação técnica clara e estruturada  
+- ✅ Pensamento analítico e resolução de problemas  
+- ✅ Comunicação de conceitos técnicos complexos  
+
+**Skills Demonstradas (Badges)**
+
+![IAM](https://img.shields.io/badge/IAM-Identity%20Access%20Management-blue)
+![Cloud Security](https://img.shields.io/badge/Cloud%20Security-AWS-orange)
+![Least Privilege](https://img.shields.io/badge/Least%20Privilege-Green)
+![Incident Response](https://img.shields.io/badge/Incident%20Response-red)
+![Security Documentation](https://img.shields.io/badge/Documentation-Blue)
 
 ---
 
-## 📚 Referências e Recursos
+## 🔗 Clone do Repositório
 
-- [AWS IAM Best Practices](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html)
-- [AWS Well-Architected Framework - Security Pillar](https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html)
-- [Princípio do Menor Privilégio (NIST)](https://csrc.nist.gov/glossary/term/least_privilege)
-- [AWS Security Documentation](https://docs.aws.amazon.com/security/)
-- [CIS AWS Foundations Benchmark](https://www.cisecurity.org/benchmark/amazon_web_services)
+```bash
+git clone https://github.com/Garcez7R/aws-cloud-security-iam-governance.git
+📚 Referências e Recursos
+AWS IAM Best Practices
 
----
+AWS Well-Architected Framework - Security Pillar
 
-## 📝 Observações
+Princípio do Menor Privilégio (NIST)
 
-Este projeto **não requer acesso ativo à AWS Console**. Ele foi desenvolvido como exercício de análise, documentação e demonstração de conhecimentos teóricos e práticos em segurança cloud, perfeitamente alinhado com o nível **iniciante-júnior** e com o conteúdo da Escola da Nuvem – AWS.
+AWS Security Documentation
 
-Todos os exemplos são baseados em cenários reais de mercado, mas utilizam dados fictícios e não representam configurações de ambientes produtivos reais.
+CIS AWS Foundations Benchmark
 
----
+📝 Observações
+Este projeto não requer acesso ativo à AWS Console. Todos os exemplos são fictícios, mas simulam cenários reais de mercado.
 
-## 📞 Contato
+Perfeito para iniciantes-júnior e alinhado com os conteúdos da Escola da Nuvem – AWS.
 
-**Rafael Garcez**  
-LinkedIn: [linkedin.com/in/rgarcez7](https://www.linkedin.com/in/rgarcez7/)  
+📞 Contato
+Rafael Garcez
+LinkedIn: linkedin.com/in/rgarcez7
 Escola da Nuvem - Turma BRASAO 227
 
----
-
-## 📄 Licença
-
+📄 Licença
 Este projeto foi desenvolvido para fins educacionais como parte do programa da Escola da Nuvem – AWS.
 
----
-
-**⭐ Se este projeto foi útil para você, considere deixar uma estrela no repositório!**
+⭐ Se este projeto foi útil para você, considere deixar uma estrela no repositório!
