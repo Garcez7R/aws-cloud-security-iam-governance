@@ -1,0 +1,201 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "S3DevelopmentBucketAccess",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:PutObject",
+        "s3:DeleteObject",
+        "s3:ListBucket"
+      ],
+      "Resource": [
+        "arn:aws:s3:::technova-dev-assets/*",
+        "arn:aws:s3:::technova-dev-assets"
+      ],
+      "Condition": {
+        "IpAddress": {
+          "aws:SourceIp": [
+            "203.0.113.0/24",
+            "198.51.100.0/24"
+          ]
+        }
+      }
+    },
+    {
+      "Sid": "EC2DevelopmentInstancesManagement",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:DescribeInstances",
+        "ec2:DescribeInstanceStatus",
+        "ec2:StartInstances",
+        "ec2:StopInstances",
+        "ec2:RebootInstances"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "StringEquals": {
+          "ec2:ResourceTag/Environment": "development"
+        }
+      }
+    },
+    {
+      "Sid": "RDSDevelopmentDatabaseReadAccess",
+      "Effect": "Allow",
+      "Action": [
+        "rds:DescribeDBInstances",
+        "rds:DescribeDBSnapshots",
+        "rds:ListTagsForResource"
+      ],
+      "Resource": [
+        "arn:aws:rds:us-east-1:123456789012:db:technova-dev-db"
+      ]
+    },
+    {
+      "Sid": "CloudWatchLogsReadAccess",
+      "Effect": "Allow",
+      "Action": [
+        "logs:DescribeLogGroups",
+        "logs:DescribeLogStreams",
+        "logs:GetLogEvents",
+        "logs:FilterLogEvents"
+      ],
+      "Resource": [
+        "arn:aws:logs:us-east-1:123456789012:log-group:/aws/lambda/technova-dev-*",
+        "arn:aws:logs:us-east-1:123456789012:log-group:/aws/ec2/technova-dev-*"
+      ]
+    },
+    {
+      "Sid": "DenyProductionResourcesAccess",
+      "Effect": "Deny",
+      "Action": "*",
+      "Resource": "*",
+      "Condition": {
+        "StringEquals": {
+          "aws:ResourceTag/Environment": "production"
+        }
+      }
+    },
+    {
+      "Sid": "DenyIAMModification",
+      "Effect": "Deny",
+      "Action": [
+        "iam:CreateUser",
+        "iam:DeleteUser",
+        "iam:CreateAccessKey",
+        "iam:DeleteAccessKey",
+        "iam:AttachUserPolicy",
+        "iam:DetachUserPolicy",
+        "iam:PutUserPolicy",
+        "iam:DeleteUserPolicy"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+
+/*
+ * POLÍTICA SEGURA - IMPLEMENTAÇÃO DE LEAST PRIVILEGE
+ * 
+ * Esta política demonstra a aplicação correta do princípio do menor privilégio,
+ * concedendo apenas as permissões estritamente necessárias para desenvolvedores
+ * realizarem suas atividades no ambiente de desenvolvimento.
+ * 
+ * CARACTERÍSTICAS DE SEGURANÇA:
+ * 
+ * 1. PERMISSÕES GRANULARES
+ *    - Ações específicas definidas explicitamente (não usa wildcards)
+ *    - Cada Statement tem um propósito claro e documentado
+ *    - Separação lógica por serviço AWS
+ * 
+ * 2. RECURSOS ESPECÍFICOS
+ *    - ARNs completos para recursos críticos (S3, RDS)
+ *    - Limitação por tags (Environment: development)
+ *    - Nenhum acesso a recursos de produção
+ * 
+ * 3. CONDIÇÕES DE SEGURANÇA
+ *    - Restrição por IP (apenas rede corporativa)
+ *    - Filtros por tags de ambiente
+ *    - Negações explícitas para proteção adicional
+ * 
+ * ANÁLISE POR STATEMENT:
+ * 
+ * Statement 1: S3DevelopmentBucketAccess
+ * - Permite operações CRUD apenas no bucket de desenvolvimento
+ * - Restrito a IPs corporativos (203.0.113.0/24 e 198.51.100.0/24)
+ * - Não permite criação/exclusão de buckets
+ * 
+ * Statement 2: EC2DevelopmentInstancesManagement
+ * - Permite gerenciar apenas instâncias tagueadas como "development"
+ * - Operações limitadas: visualizar, iniciar, parar, reiniciar
+ * - NÃO permite: criar, terminar, modificar configurações de segurança
+ * 
+ * Statement 3: RDSDevelopmentDatabaseReadAccess
+ * - Acesso SOMENTE LEITURA ao banco de dados de desenvolvimento
+ * - Não permite modificações, backups ou restaurações
+ * - ARN específico do banco de dados
+ * 
+ * Statement 4: CloudWatchLogsReadAccess
+ * - Acesso a logs apenas de recursos de desenvolvimento
+ * - Essencial para debugging e troubleshooting
+ * - Não permite modificação ou exclusão de logs
+ * 
+ * Statement 5: DenyProductionResourcesAccess
+ * - NEGAÇÃO EXPLÍCITA de acesso a recursos de produção
+ * - Funciona como camada adicional de proteção
+ * - Deny sempre prevalece sobre Allow
+ * 
+ * Statement 6: DenyIAMModification
+ * - NEGAÇÃO EXPLÍCITA de modificações em IAM
+ * - Previne escalação de privilégios
+ * - Desenvolvedores não podem criar usuários ou modificar permissões
+ * 
+ * PRINCÍPIOS APLICADOS:
+ * 
+ * ✓ Least Privilege: Apenas permissões necessárias para a função
+ * ✓ Defense in Depth: Múltiplas camadas de controle (Allow + Deny + Conditions)
+ * ✓ Separation of Duties: Desenvolvedores não gerenciam IAM
+ * ✓ Zero Trust: Verificação contínua (IP, tags, recursos específicos)
+ * 
+ * BENEFÍCIOS:
+ * 
+ * - Redução da superfície de ataque
+ * - Limitação de impacto em caso de comprometimento de credenciais
+ * - Facilita auditoria e compliance
+ * - Previne erros acidentais em produção
+ * - Alinhado com frameworks de segurança (CIS, NIST, ISO 27001)
+ * 
+ * COMPARAÇÃO COM POLÍTICA INSEGURA:
+ * 
+ * | Aspecto              | Política Insegura    | Esta Política (Segura)           |
+ * |----------------------|----------------------|----------------------------------|
+ * | Ações permitidas     | Todas (*)            | Específicas por serviço          |
+ * | Recursos             | Todos (*)            | ARNs específicos + tags          |
+ * | Condições            | Nenhuma              | IP, tags, negações explícitas    |
+ * | Acesso a produção    | Sim                  | Negado explicitamente            |
+ * | Modificação de IAM   | Sim                  | Negado explicitamente            |
+ * | Risco de incidente   | CRÍTICO              | BAIXO                            |
+ * 
+ * MANUTENÇÃO:
+ * 
+ * - Revisar trimestralmente as permissões
+ * - Ajustar ARNs conforme novos recursos são criados
+ * - Atualizar ranges de IP quando necessário
+ * - Monitorar logs de acesso negado para identificar necessidades legítimas
+ * 
+ * IMPLEMENTAÇÃO RECOMENDADA:
+ * 
+ * 1. Anexar esta política a um GRUPO IAM (não diretamente a usuários)
+ * 2. Criar grupo "Developers" e adicionar usuários ao grupo
+ * 3. Habilitar MFA para todos os usuários do grupo
+ * 4. Configurar alertas no CloudWatch para ações negadas
+ * 5. Documentar exceções e justificativas
+ * 
+ * REFERÊNCIAS:
+ * 
+ * - AWS IAM Best Practices: https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html
+ * - Princípio do Menor Privilégio: https://csrc.nist.gov/glossary/term/least_privilege
+ * - AWS Well-Architected Security Pillar: https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/
+ * - CIS AWS Foundations Benchmark: https://www.cisecurity.org/benchmark/amazon_web_services
+ */

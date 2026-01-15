@@ -1,0 +1,54 @@
+# Arquivos do sistema operacional
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Arquivos de editor
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Arquivos temporários
+*.tmp
+*.bak
+*.log
+*.cache
+
+# Arquivos de credenciais (NUNCA commitar credenciais!)
+*.pem
+*.key
+*.credentials
+.aws/
+credentials
+config
+
+# Arquivos de ambiente
+.env
+.env.local
+.env.*.local
+
+# Node modules (caso adicione ferramentas JS futuramente)
+node_modules/
+
+# Python (caso adicione scripts Python futuramente)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# Arquivos de build
+dist/
+build/
+*.egg-info/

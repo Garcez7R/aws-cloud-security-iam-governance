@@ -1,0 +1,267 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ReadOnlyAccessToAllServices",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:GetObjectVersion",
+        "s3:ListBucket",
+        "s3:ListAllMyBuckets",
+        "s3:GetBucketLocation",
+        "s3:GetBucketPolicy",
+        "s3:GetBucketVersioning",
+        "s3:GetBucketLogging",
+        "ec2:Describe*",
+        "ec2:GetConsoleOutput",
+        "ec2:GetConsoleScreenshot",
+        "rds:Describe*",
+        "rds:ListTagsForResource",
+        "lambda:List*",
+        "lambda:Get*",
+        "cloudwatch:Describe*",
+        "cloudwatch:Get*",
+        "cloudwatch:List*",
+        "logs:Describe*",
+        "logs:Get*",
+        "logs:FilterLogEvents",
+        "logs:TestMetricFilter",
+        "iam:Get*",
+        "iam:List*",
+        "iam:GenerateCredentialReport",
+        "iam:GenerateServiceLastAccessedDetails",
+        "cloudtrail:LookupEvents",
+        "cloudtrail:GetTrailStatus",
+        "cloudtrail:DescribeTrails",
+        "cloudtrail:ListTags",
+        "config:Describe*",
+        "config:Get*",
+        "config:List*",
+        "guardduty:Get*",
+        "guardduty:List*",
+        "securityhub:Get*",
+        "securityhub:List*",
+        "securityhub:Describe*"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "DenyAllWriteOperations",
+      "Effect": "Deny",
+      "Action": [
+        "*:Create*",
+        "*:Delete*",
+        "*:Put*",
+        "*:Update*",
+        "*:Modify*",
+        "*:Attach*",
+        "*:Detach*",
+        "*:Remove*",
+        "*:Set*",
+        "*:Start*",
+        "*:Stop*",
+        "*:Reboot*",
+        "*:Terminate*",
+        "*:Enable*",
+        "*:Disable*"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "AllowAccessAnalyzerRecommendations",
+      "Effect": "Allow",
+      "Action": [
+        "access-analyzer:List*",
+        "access-analyzer:Get*",
+        "access-analyzer:ValidatePolicy"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+
+/*
+ * POLÍTICA READ-ONLY - ACESSO PARA AUDITORIA E MONITORAMENTO
+ * 
+ * Esta política concede permissões de SOMENTE LEITURA em todos os serviços AWS,
+ * ideal para auditores, analistas de segurança, ferramentas de compliance e
+ * monitoramento automatizado.
+ * 
+ * PROPÓSITO:
+ * 
+ * Permitir visibilidade completa da infraestrutura AWS sem risco de modificações
+ * acidentais ou intencionais. Essencial para:
+ * - Auditorias de segurança e compliance
+ * - Análise de configurações
+ * - Investigação de incidentes
+ * - Geração de relatórios
+ * - Monitoramento contínuo
+ * 
+ * ESTRUTURA DA POLÍTICA:
+ * 
+ * Statement 1: ReadOnlyAccessToAllServices
+ * 
+ * Concede permissões de leitura amplas em serviços críticos:
+ * 
+ * S3 (Simple Storage Service):
+ * - Visualização de objetos e metadados
+ * - Listagem de buckets e suas configurações
+ * - Análise de políticas de acesso e versionamento
+ * - Verificação de logs de acesso
+ * 
+ * EC2 (Elastic Compute Cloud):
+ * - Describe*: Visualização de todas as instâncias e configurações
+ * - Console output: Acesso a logs de inicialização
+ * - Screenshots: Captura de tela para troubleshooting
+ * 
+ * RDS (Relational Database Service):
+ * - Describe*: Informações sobre bancos de dados
+ * - Tags: Metadados e classificação de recursos
+ * - NÃO permite acesso aos dados dentro dos bancos
+ * 
+ * Lambda:
+ * - Listagem de funções
+ * - Visualização de código e configurações
+ * - Análise de triggers e permissões
+ * 
+ * CloudWatch & Logs:
+ * - Acesso a métricas e alarmes
+ * - Leitura de logs de aplicações
+ * - Análise de eventos e padrões
+ * 
+ * IAM (Identity and Access Management):
+ * - Visualização de usuários, grupos e roles
+ * - Análise de políticas anexadas
+ * - Geração de relatórios de credenciais
+ * - Identificação de último acesso a serviços
+ * 
+ * CloudTrail:
+ * - Consulta de eventos de API
+ * - Auditoria de ações realizadas
+ * - Rastreamento de mudanças
+ * 
+ * AWS Config:
+ * - Visualização de configurações históricas
+ * - Análise de compliance
+ * - Rastreamento de mudanças de configuração
+ * 
+ * GuardDuty & Security Hub:
+ * - Acesso a descobertas de segurança
+ * - Análise de ameaças detectadas
+ * - Visualização de score de segurança
+ * 
+ * Statement 2: DenyAllWriteOperations
+ * 
+ * Negação explícita de TODAS as operações de escrita/modificação:
+ * - Create*: Criação de novos recursos
+ * - Delete*: Exclusão de recursos
+ * - Put*: Inserção de dados ou configurações
+ * - Update*: Atualização de recursos existentes
+ * - Modify*: Modificação de configurações
+ * - Attach/Detach: Anexar/remover políticas ou recursos
+ * - Start/Stop/Reboot/Terminate: Controle de instâncias
+ * - Enable/Disable: Ativação/desativação de funcionalidades
+ * 
+ * Esta negação funciona como CAMADA ADICIONAL DE PROTEÇÃO, garantindo que
+ * mesmo que haja permissões Allow conflitantes, nenhuma operação de escrita
+ * será permitida (Deny sempre prevalece sobre Allow).
+ * 
+ * Statement 3: AllowAccessAnalyzerRecommendations
+ * 
+ * Permissão especial para uso do AWS IAM Access Analyzer:
+ * - Ferramenta que identifica recursos compartilhados externamente
+ * - Validação de políticas IAM
+ * - Recomendações de segurança
+ * 
+ * CASOS DE USO:
+ * 
+ * 1. AUDITORIA DE COMPLIANCE
+ *    Auditores externos ou internos podem revisar configurações sem risco
+ *    de alterações, gerando relatórios para ISO 27001, SOC 2, PCI-DSS, etc.
+ * 
+ * 2. ANÁLISE DE SEGURANÇA
+ *    Analistas de segurança podem investigar incidentes, analisar logs e
+ *    identificar vulnerabilidades sem afetar o ambiente.
+ * 
+ * 3. FERRAMENTAS DE MONITORAMENTO
+ *    Soluções como Prowler, ScoutSuite, CloudMapper podem escanear a
+ *    infraestrutura para identificar riscos e gerar relatórios.
+ * 
+ * 4. DESENVOLVEDORES EM TREINAMENTO
+ *    Novos membros da equipe podem explorar a infraestrutura para
+ *    aprendizado sem risco de causar impacto.
+ * 
+ * 5. RESPOSTA A INCIDENTES
+ *    Durante investigações, múltiplos analistas podem acessar informações
+ *    simultaneamente sem interferir na infraestrutura.
+ * 
+ * PRINCÍPIOS DE SEGURANÇA APLICADOS:
+ * 
+ * ✓ Separation of Duties: Separação entre quem visualiza e quem modifica
+ * ✓ Defense in Depth: Negação explícita como camada adicional
+ * ✓ Least Privilege: Apenas leitura, nenhuma capacidade de modificação
+ * ✓ Transparency: Visibilidade completa para auditoria
+ * ✓ Non-Repudiation: Ações de leitura também são logadas no CloudTrail
+ * 
+ * LIMITAÇÕES E CONSIDERAÇÕES:
+ * 
+ * 1. DADOS SENSÍVEIS
+ *    Esta política permite visualização de configurações, mas não acesso
+ *    direto a dados dentro de bancos de dados ou aplicações.
+ * 
+ * 2. SECRETS E CREDENCIAIS
+ *    Não permite acesso a valores de secrets no Secrets Manager ou
+ *    Parameter Store (apenas metadados).
+ * 
+ * 3. CUSTOS
+ *    Algumas operações de leitura (como GenerateCredentialReport) podem
+ *    ter custo, embora mínimo.
+ * 
+ * 4. INFORMAÇÕES CONFIDENCIAIS
+ *    Mesmo sendo read-only, esta política expõe informações sobre a
+ *    arquitetura que podem ser sensíveis. Conceder apenas a pessoal
+ *    autorizado.
+ * 
+ * IMPLEMENTAÇÃO RECOMENDADA:
+ * 
+ * 1. Criar grupo IAM "Auditors" ou "SecurityAnalysts"
+ * 2. Anexar esta política ao grupo
+ * 3. Adicionar usuários específicos ao grupo
+ * 4. Habilitar MFA obrigatório para estes usuários
+ * 5. Configurar alertas para acessos fora do horário comercial
+ * 6. Revisar periodicamente quem possui este acesso
+ * 7. Documentar justificativa de acesso para compliance
+ * 
+ * MONITORAMENTO:
+ * 
+ * Mesmo sendo read-only, é importante monitorar:
+ * - Frequência de acessos
+ * - Horários de acesso (detectar anomalias)
+ * - Recursos mais consultados
+ * - Tentativas de operações negadas
+ * 
+ * COMPARAÇÃO COM POLÍTICAS AWS GERENCIADAS:
+ * 
+ * Esta política é similar a "ReadOnlyAccess" da AWS, mas com adições:
+ * - Negação explícita de operações de escrita (camada extra)
+ * - Inclusão específica de serviços de segurança (GuardDuty, Security Hub)
+ * - Permissões para IAM Access Analyzer
+ * - Documentação detalhada do propósito
+ * 
+ * CONFORMIDADE:
+ * 
+ * Esta política auxilia no atendimento a requisitos de:
+ * - CIS AWS Foundations Benchmark (controles de auditoria)
+ * - NIST 800-53 (AU-2, AU-3, AU-6: Auditoria e Monitoramento)
+ * - ISO 27001 (A.12.4: Logging e Monitoramento)
+ * - PCI-DSS (Requisito 10: Rastreamento e Monitoramento)
+ * - LGPD (Art. 46: Auditoria de Segurança)
+ * 
+ * REFERÊNCIAS:
+ * 
+ * - AWS ReadOnlyAccess Managed Policy: https://console.aws.amazon.com/iam/home#/policies/arn:aws:iam::aws:policy/ReadOnlyAccess
+ * - AWS IAM Access Analyzer: https://docs.aws.amazon.com/IAM/latest/UserGuide/what-is-access-analyzer.html
+ * - CIS AWS Foundations Benchmark: https://www.cisecurity.org/benchmark/amazon_web_services
+ * - AWS Security Audit Guidelines: https://docs.aws.amazon.com/audit-manager/latest/userguide/
+ */
