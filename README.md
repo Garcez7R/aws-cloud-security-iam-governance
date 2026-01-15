@@ -3,7 +3,7 @@
 ![AWS](https://img.shields.io/badge/AWS-Cloud%20Security-orange?style=flat-square&logo=amazon-aws)
 ![IAM](https://img.shields.io/badge/IAM-Identity%20%26%20Access%20Management-blue?style=flat-square)
 ![Security](https://img.shields.io/badge/Security-Best%20Practices-green?style=flat-square)
-![Status](https://imgshields.io/badge/status-educational-blue)
+![Status](https://img.shields.io/badge/status-educational-blue)
 ![Docs](https://img.shields.io/badge/docs-markdown-blue)
 ![Last Commit](https://img.shields.io/github/last-commit/Garcez7R/aws-cloud-security-iam-governance)
 
