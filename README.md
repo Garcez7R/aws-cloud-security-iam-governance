@@ -149,19 +149,6 @@ Simulação de incidente real envolvendo falhas de IAM:
 *   ✅ Pensamento analítico e resolução de problemas
 *   ✅ Comunicação de conceitos técnicos complexos
 
-**Skills Demonstradas (Badges)**
-
-![IAM](https://img.shields.io/badge/IAM-Identity%20Access%20Management-blue)
-![Cloud Security](https://img.shields.io/badge/Cloud%20Security-AWS-orange)
-![Least Privilege](https://img.shields.io/badge/Least%20Privilege-Green)
-![Incident Response](https://img.shields.io/badge/Incident%20Response-red)
-![Security Documentation](https://img.shields.io/badge/Documentation-Blue)
-
-## 🔗 Clone do Repositório
-
-```bash
-git clone https://github.com/Garcez7R/aws-cloud-security-iam-governance.git
-```
 
 ## 📚 Referências e Recursos
 
