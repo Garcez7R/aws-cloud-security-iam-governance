@@ -3,6 +3,8 @@
 ![AWS](https://img.shields.io/badge/AWS-Cloud%20Security-orange?style=flat-square&logo=amazon-aws)
 ![IAM](https://img.shields.io/badge/IAM-Identity%20%26%20Access%20Management-blue?style=flat-square)
 ![Security](https://img.shields.io/badge/Security-Best%20Practices-green?style=flat-square)
+![Status](https://img.shields.io/badge/status-educational-blue)
+
 
 ## 📋 Sobre o Projeto
 
@@ -82,22 +84,16 @@ aws-cloud-security-iam-governance/
 
 ---
 
-## 🚀 Como Usar Este Repositório
+## 🚀 Navegação do Repositório
 
-### Para Recrutadores e Avaliadores
+Este repositório está organizado para facilitar a compreensão progressiva do projeto, desde o contexto do problema até as decisões técnicas de segurança adotadas.
 
-1. **Comece pelo README** (este arquivo) para entender o contexto do projeto
-2. **Leia o caso prático** em `case/security-incident-case.md` para ver aplicação real
-3. **Analise as políticas** na pasta `policies/` para avaliar conhecimento técnico
-4. **Revise as análises** em `analysis/` para verificar raciocínio de segurança
-5. **Consulte o diagrama** em `diagrams/` para visualização da arquitetura
-
-### Para Estudantes
-
-1. Leia o `PROJECT_GUIDE.md` para entender a metodologia completa
-2. Estude as políticas JSON e compare versões inseguras vs. seguras
-3. Revise os documentos de análise para aprofundar conceitos
-4. Use o `security-checklist.md` como referência para seus próprios projetos
+- **README.md**: visão geral do projeto, objetivos e contexto
+- **case/security-incident-case.md**: estudo de caso que simula um incidente real envolvendo falhas de IAM
+- **policies/**: exemplos práticos de políticas IAM, incluindo cenários inseguros e versões corrigidas
+- **analysis/**: análises de risco, boas práticas e erros comuns relacionados a IAM
+- **diagrams/**: representação visual da arquitetura e dos controles de acesso
+- **PROJECT_GUIDE.md**: documentação detalhada do processo e da metodologia utilizada
 
 ---
 
